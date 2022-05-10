@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -15,8 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DAL\" />
-    <Folder Include="BUS\" />
+    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>

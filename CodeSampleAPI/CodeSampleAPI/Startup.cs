@@ -1,3 +1,5 @@
+using CodeSampleAPI.Data;
+using CodeSampleAPI.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +34,15 @@ namespace CodeSampleAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CodeSampleAPI", Version = "v1" });
             });
+            services.AddDbContext<CodeSampleContext>();
+            services.AddTransient<ITestCaseService, TestCaseService>();
+            services.AddTransient<IMonHocService, MonHocService>();
+            services.AddTransient<IBaiTapCodeService, BaiTapCodeService>();
+            services.AddTransient<ILyThuyetService, LyThuyetService>();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
