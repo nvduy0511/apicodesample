@@ -9,10 +9,8 @@ namespace CodeSampleAPI.Data
     {
         public GiangVien()
         {
-            Admins = new HashSet<Admin>();
             BaiTapCodes = new HashSet<BaiTapCode>();
             BaiTapTracNghiems = new HashSet<BaiTapTracNghiem>();
-            PhongHocs = new HashSet<PhongHoc>();
         }
 
         public string UId { get; set; }
@@ -21,9 +19,7 @@ namespace CodeSampleAPI.Data
         public DateTime NamSinh { get; set; }
         public string Truong { get; set; }
 
-        public virtual ICollection<Admin> Admins { get; set; }
         public virtual ICollection<BaiTapCode> BaiTapCodes { get; set; }
         public virtual ICollection<BaiTapTracNghiem> BaiTapTracNghiems { get; set; }
-        public virtual ICollection<PhongHoc> PhongHocs { get; set; }
     }
 }

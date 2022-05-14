@@ -19,6 +19,7 @@ namespace CodeSampleAPI.Data
         public DateTime NgayTao { get; set; }
         public DateTime NgayHetHan { get; set; }
         public int IdPhong { get; set; }
+        public int? TrangThai { get; set; }
 
         public virtual PhongHoc IdPhongNavigation { get; set; }
         public virtual ICollection<BaiLamKiemTra> BaiLamKiemTras { get; set; }

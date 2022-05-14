@@ -35,10 +35,12 @@ namespace CodeSampleAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CodeSampleAPI", Version = "v1" });
             });
             services.AddDbContext<CodeSampleContext>();
+            services.AddTransient<IRunCodeService, RunCodeService>();
             services.AddTransient<ITestCaseService, TestCaseService>();
             services.AddTransient<IMonHocService, MonHocService>();
             services.AddTransient<IBaiTapCodeService, BaiTapCodeService>();
             services.AddTransient<ILyThuyetService, LyThuyetService>();
+            services.AddTransient<IBaiTapTracNghiemService, BaiTapTracNghiemService>();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );

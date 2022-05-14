@@ -17,7 +17,6 @@ namespace CodeSampleAPI.Data
         public string TenPhong { get; set; }
         public string IdChuPhong { get; set; }
 
-        public virtual GiangVien IdChuPhongNavigation { get; set; }
         public virtual ICollection<CtPhongHoc> CtPhongHocs { get; set; }
         public virtual ICollection<DeKiemTra> DeKiemTras { get; set; }
     }

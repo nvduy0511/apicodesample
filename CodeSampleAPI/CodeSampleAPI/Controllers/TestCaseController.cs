@@ -22,5 +22,11 @@ namespace CodeSampleAPI.Controllers
         {
             return Ok(_testCaseService.getListIntTestCaseByIDBaiTapCode(id));
         }
+
+        [HttpGet("getOneTestCase")]
+        public IActionResult getOneTestCaseByID(int id)
+        {
+            return Ok(_testCaseService.getTestCasesByIDBaiTapCode(id));
+        }    
     }
 }

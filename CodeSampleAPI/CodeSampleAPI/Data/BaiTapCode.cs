@@ -15,7 +15,7 @@ namespace CodeSampleAPI.Data
         }
 
         public int Id { get; set; }
-        public string DoKho { get; set; }
+        public int DoKho { get; set; }
         public string TieuDe { get; set; }
         public string DeBai { get; set; }
         public bool IsPublic { get; set; }

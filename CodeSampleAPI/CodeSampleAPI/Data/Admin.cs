@@ -9,8 +9,5 @@ namespace CodeSampleAPI.Data
     {
         public string TaiKhoan { get; set; }
         public string MatKhau { get; set; }
-        public string IdGiangVien { get; set; }
-
-        public virtual GiangVien IdGiangVienNavigation { get; set; }
     }
 }

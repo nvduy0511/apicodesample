@@ -19,15 +19,17 @@ namespace CodeSampleAPI.Controllers
     public class RunCodeController : ControllerBase
     {
         private readonly ITestCaseService _testCaseService;
-        public RunCodeController(ITestCaseService testCaseService)
+        private readonly IRunCodeService _runCodeService;
+        public RunCodeController(ITestCaseService testCaseService,IRunCodeService runCodeService)
         {
             this._testCaseService = testCaseService;
+            this._runCodeService = runCodeService;
         }
         [Route("api/runCode")]
         [HttpPost]
         public IActionResult runCode([FromBody] RunCodeRequest runCodeRequest)
         {
-            Task<RunCodeResponse> task = Task<RunCodeResponse>.Run(() => callAPI(runCodeRequest));
+            Task<RunCodeResponse> task = Task<RunCodeResponse>.Run(() => _runCodeService.callAPI(runCodeRequest));
             task.Wait();
             return Ok(task.Result);
         }
@@ -39,7 +41,7 @@ namespace CodeSampleAPI.Controllers
             List<TestCase> testCases = _testCaseService.getTestCasesByIDBaiTapCode(id);
 
             // List input cho các test case
-            List<String> inputs = (from tC in testCases select tC.Intput).ToList();
+            List<String> inputs = (from tC in testCases select tC.Input).ToList();
             List<String> outputs = (from tC in testCases select tC.Output).ToList();
             // List các task chạy bất đồng bộ
             List<Task<RunCodeResponse>> TaskList = new List<Task<RunCodeResponse>>();
@@ -53,7 +55,7 @@ namespace CodeSampleAPI.Controllers
             // Chạy đa luồng call API Code X
             foreach (RunCodeRequest runCodeRequest in runCodeRequests)
             {
-                Task<RunCodeResponse> task = Task<RunCodeResponse>.Run(() => callAPI(runCodeRequest));
+                Task<RunCodeResponse> task = Task<RunCodeResponse>.Run(() => _runCodeService.callAPI(runCodeRequest));
                 TaskList.Add(task);
             }
             Task.WaitAll(TaskList.ToArray());
@@ -72,40 +74,5 @@ namespace CodeSampleAPI.Controllers
             return Ok(kq);
         }
 
-        public static async Task<RunCodeResponse> callAPI(RunCodeRequest runCodeRequest)
-        {
-            using (var client = new HttpClient())
-            {
-                var contentType = new MediaTypeWithQualityHeaderValue("application/json");
-                var url = "https://codexweb.netlify.app/.netlify/functions/enforceCode";
-                client.DefaultRequestHeaders.Accept.Add(contentType);
-
-                var data = new Dictionary<string, string>
-                {
-                    {"code",runCodeRequest.Code},
-                    {"input",runCodeRequest.Input},
-                    {"language",runCodeRequest.Language}
-                };
-
-                var jsonData = JsonConvert.SerializeObject(data);
-                var contentData = new StringContent(jsonData.ToString(), Encoding.UTF8, "application/json");
-                var response = await client.PostAsync(url, contentData);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var stringData = await response.Content.ReadAsStringAsync();
-                    var result = JsonConvert.DeserializeObject<RunCodeResponse>(stringData);
-                    return result;
-                }
-
-            }
-            return null;
-        }
-
-        /*
-         
-          #include<iostream>\nusing namespace std;\n\nint main()\n{\n    string s;\n    getline(cin, s);\n    cout<<s;\n    return 0;\n}
-
-         */
     }
 }

@@ -8,7 +8,7 @@ namespace CodeSampleAPI.Data
     public partial class TestCase
     {
         public int Id { get; set; }
-        public string Intput { get; set; }
+        public string Input { get; set; }
         public string Output { get; set; }
         public int IdBaiTap { get; set; }
 

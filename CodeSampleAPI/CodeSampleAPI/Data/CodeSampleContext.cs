@@ -55,20 +55,9 @@ namespace CodeSampleAPI.Data
 
                 entity.Property(e => e.TaiKhoan).HasMaxLength(50);
 
-                entity.Property(e => e.IdGiangVien)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("ID_GiangVien");
-
                 entity.Property(e => e.MatKhau)
                     .IsRequired()
                     .HasMaxLength(50);
-
-                entity.HasOne(d => d.IdGiangVienNavigation)
-                    .WithMany(p => p.Admins)
-                    .HasForeignKey(d => d.IdGiangVien)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Admin_GiangVien");
             });
 
             modelBuilder.Entity<BaiLamKiemTra>(entity =>
@@ -106,10 +95,6 @@ namespace CodeSampleAPI.Data
                     .IsRequired()
                     .HasMaxLength(4000);
 
-                entity.Property(e => e.DoKho)
-                    .IsRequired()
-                    .HasMaxLength(20);
-
                 entity.Property(e => e.IsPublic).HasColumnName("isPublic");
 
                 entity.Property(e => e.TieuDe).HasMaxLength(100);
@@ -132,15 +117,15 @@ namespace CodeSampleAPI.Data
 
                 entity.Property(e => e.CauHoi)
                     .IsRequired()
-                    .HasMaxLength(100);
+                    .HasMaxLength(1000);
 
-                entity.Property(e => e.CauTraLoi1).HasMaxLength(50);
+                entity.Property(e => e.CauTraLoi1).HasMaxLength(500);
 
-                entity.Property(e => e.CauTraLoi2).HasMaxLength(50);
+                entity.Property(e => e.CauTraLoi2).HasMaxLength(500);
 
-                entity.Property(e => e.CauTraLoi3).HasMaxLength(50);
+                entity.Property(e => e.CauTraLoi3).HasMaxLength(500);
 
-                entity.Property(e => e.CauTraLoi4).HasMaxLength(50);
+                entity.Property(e => e.CauTraLoi4).HasMaxLength(500);
 
                 entity.Property(e => e.UIdNguoiTao)
                     .HasMaxLength(50)
@@ -455,12 +440,6 @@ namespace CodeSampleAPI.Data
                 entity.Property(e => e.TenPhong)
                     .IsRequired()
                     .HasMaxLength(100);
-
-                entity.HasOne(d => d.IdChuPhongNavigation)
-                    .WithMany(p => p.PhongHocs)
-                    .HasForeignKey(d => d.IdChuPhong)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PhongHoc_GiangVien");
             });
 
             modelBuilder.Entity<TestCase>(entity =>
@@ -471,10 +450,10 @@ namespace CodeSampleAPI.Data
 
                 entity.Property(e => e.IdBaiTap).HasColumnName("ID_BaiTap");
 
-                entity.Property(e => e.Intput)
+                entity.Property(e => e.Input)
                     .IsRequired()
                     .HasMaxLength(1000)
-                    .HasColumnName("intput");
+                    .HasColumnName("input");
 
                 entity.Property(e => e.Output)
                     .IsRequired()
@@ -484,7 +463,6 @@ namespace CodeSampleAPI.Data
                 entity.HasOne(d => d.IdBaiTapNavigation)
                     .WithMany(p => p.TestCases)
                     .HasForeignKey(d => d.IdBaiTap)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TestCase_BaiTapCode");
             });
 
