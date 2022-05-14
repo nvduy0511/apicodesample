@@ -41,6 +41,7 @@ namespace CodeSampleAPI
             services.AddTransient<IBaiTapCodeService, BaiTapCodeService>();
             services.AddTransient<ILyThuyetService, LyThuyetService>();
             services.AddTransient<IBaiTapTracNghiemService, BaiTapTracNghiemService>();
+            services.AddTransient<IPhongHocService, PhongHocService>();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
