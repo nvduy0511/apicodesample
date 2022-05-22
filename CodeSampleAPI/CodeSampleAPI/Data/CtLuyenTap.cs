@@ -12,7 +12,7 @@ namespace CodeSampleAPI.Data
         public bool? TrangThai { get; set; }
         public string Code { get; set; }
 
-        public virtual BaiTapCode IdBaiTapNavigation { get; set; }
+        public virtual BtLuyenTap IdBaiTapNavigation { get; set; }
         public virtual NguoiDung UIdNguoiDungNavigation { get; set; }
     }
 }

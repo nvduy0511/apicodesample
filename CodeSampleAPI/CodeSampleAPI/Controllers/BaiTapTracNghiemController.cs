@@ -29,6 +29,18 @@ namespace CodeSampleAPI.Controllers
         public IActionResult getAll()
         {
             return Ok(_baiTapTracNghiemService.getAll());
+        }   
+
+        [HttpGet("getOne")]
+        public IActionResult getOne(int  id)
+        {
+            return Ok(_baiTapTracNghiemService.getOne(id));
+        }
+
+        [HttpGet("search")]
+        public IActionResult searchBaiTapTracNghiem(string searchValue)
+        {
+            return Ok(_baiTapTracNghiemService.searchBaiTapTN(searchValue));
         }
 
         [HttpDelete]

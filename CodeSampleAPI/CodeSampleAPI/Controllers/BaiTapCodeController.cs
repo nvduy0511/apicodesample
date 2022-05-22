@@ -31,6 +31,12 @@ namespace CodeSampleAPI.Controllers
             return Ok(_baiTapCodeService.getAllBaiTapCode());
         }
 
+        [HttpGet("search")]
+        public IActionResult searchBaiTapCode(string searchValue)
+        {
+            return Ok(_baiTapCodeService.searchByIdOrMoTa(searchValue));
+        }
+
         [HttpPost("postBaiTapCode")]
         public IActionResult addBaiTapCodeAndTestCase([FromBody] BaiTapCode_Custom baiTapCode_Custom)
         {

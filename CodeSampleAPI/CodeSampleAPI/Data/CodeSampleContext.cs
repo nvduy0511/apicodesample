@@ -21,6 +21,7 @@ namespace CodeSampleAPI.Data
         public virtual DbSet<BaiLamKiemTra> BaiLamKiemTras { get; set; }
         public virtual DbSet<BaiTapCode> BaiTapCodes { get; set; }
         public virtual DbSet<BaiTapTracNghiem> BaiTapTracNghiems { get; set; }
+        public virtual DbSet<BtLuyenTap> BtLuyenTaps { get; set; }
         public virtual DbSet<CtBaiLamCode> CtBaiLamCodes { get; set; }
         public virtual DbSet<CtBaiLamTracNghiem> CtBaiLamTracNghiems { get; set; }
         public virtual DbSet<CtDeKiemTraCode> CtDeKiemTraCodes { get; set; }
@@ -34,7 +35,8 @@ namespace CodeSampleAPI.Data
         public virtual DbSet<MonHoc> MonHocs { get; set; }
         public virtual DbSet<NguoiDung> NguoiDungs { get; set; }
         public virtual DbSet<PhongHoc> PhongHocs { get; set; }
-        public virtual DbSet<TestCase> TestCases { get; set; }
+        public virtual DbSet<TestCaseBtcode> TestCaseBtcodes { get; set; }
+        public virtual DbSet<TestCaseLuyenTap> TestCaseLuyenTaps { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -93,11 +95,24 @@ namespace CodeSampleAPI.Data
 
                 entity.Property(e => e.DeBai)
                     .IsRequired()
-                    .HasMaxLength(4000);
+                    .HasMaxLength(400);
 
-                entity.Property(e => e.IsPublic).HasColumnName("isPublic");
+                entity.Property(e => e.DinhDangDauRa).HasMaxLength(100);
 
-                entity.Property(e => e.TieuDe).HasMaxLength(100);
+                entity.Property(e => e.DinhDangDauVao).HasMaxLength(100);
+
+                entity.Property(e => e.MauDauRa).HasMaxLength(150);
+
+                entity.Property(e => e.MauDauVao).HasMaxLength(150);
+
+                entity.Property(e => e.NgonNgu).HasMaxLength(10);
+
+                entity.Property(e => e.RangBuoc).HasMaxLength(100);
+
+                entity.Property(e => e.TieuDe)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasComment("SQL_Latin1_General_CP1_CI_AI");
 
                 entity.Property(e => e.UIdNguoiTao)
                     .HasMaxLength(50)
@@ -117,7 +132,8 @@ namespace CodeSampleAPI.Data
 
                 entity.Property(e => e.CauHoi)
                     .IsRequired()
-                    .HasMaxLength(1000);
+                    .HasMaxLength(1000)
+                    .HasComment("SQL_Latin1_General_CP1_CI_AI");
 
                 entity.Property(e => e.CauTraLoi1).HasMaxLength(500);
 
@@ -135,6 +151,42 @@ namespace CodeSampleAPI.Data
                     .WithMany(p => p.BaiTapTracNghiems)
                     .HasForeignKey(d => d.UIdNguoiTao)
                     .HasConstraintName("FK_BaiTapTracNghiem_GiangVien");
+            });
+
+            modelBuilder.Entity<BtLuyenTap>(entity =>
+            {
+                entity.ToTable("BT_LuyenTap");
+
+                entity.Property(e => e.DeBai)
+                    .IsRequired()
+                    .HasMaxLength(400);
+
+                entity.Property(e => e.DinhDangDauRa).HasMaxLength(100);
+
+                entity.Property(e => e.DinhDangDauVao).HasMaxLength(100);
+
+                entity.Property(e => e.MauDauRa).HasMaxLength(150);
+
+                entity.Property(e => e.MauDauVao).HasMaxLength(150);
+
+                entity.Property(e => e.RangBuoc).HasMaxLength(100);
+
+                entity.Property(e => e.Tag).HasMaxLength(20);
+
+                entity.Property(e => e.TieuDe)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasComment("SQL_Latin1_General_CP1_CI_AI");
+
+                entity.Property(e => e.UIdNguoiTao)
+                    .HasMaxLength(50)
+                    .HasColumnName("uID_NguoiTao");
+
+                entity.HasOne(d => d.UIdNguoiTaoNavigation)
+                    .WithMany(p => p.BtLuyenTaps)
+                    .HasForeignKey(d => d.UIdNguoiTao)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_BT_LuyenTap_GiangVien");
             });
 
             modelBuilder.Entity<CtBaiLamCode>(entity =>
@@ -260,7 +312,7 @@ namespace CodeSampleAPI.Data
                     .WithMany(p => p.CtLuyenTaps)
                     .HasForeignKey(d => d.IdBaiTap)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CT_LuyenTap_BaiTapCode");
+                    .HasConstraintName("FK_CT_LuyenTap_BT_LuyenTap");
 
                 entity.HasOne(d => d.UIdNguoiDungNavigation)
                     .WithMany(p => p.CtLuyenTaps)
@@ -331,9 +383,9 @@ namespace CodeSampleAPI.Data
 
                 entity.Property(e => e.MoTa).HasMaxLength(50);
 
-                entity.Property(e => e.NgayHetHan).HasColumnType("datetime");
+                entity.Property(e => e.NgayBatDau).HasColumnType("datetime");
 
-                entity.Property(e => e.NgayTao).HasColumnType("datetime");
+                entity.Property(e => e.NgayKetThuc).HasColumnType("datetime");
 
                 entity.HasOne(d => d.IdPhongNavigation)
                     .WithMany(p => p.DeKiemTras)
@@ -360,7 +412,11 @@ namespace CodeSampleAPI.Data
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.LinkAvatar).HasMaxLength(50);
+
                 entity.Property(e => e.NamSinh).HasColumnType("date");
+
+                entity.Property(e => e.TenHienThi).HasMaxLength(50);
 
                 entity.Property(e => e.Truong).HasMaxLength(50);
             });
@@ -421,7 +477,11 @@ namespace CodeSampleAPI.Data
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.LinkAvatar).HasMaxLength(50);
+
                 entity.Property(e => e.NamSinh).HasColumnType("date");
+
+                entity.Property(e => e.TenHienThi).HasMaxLength(50);
 
                 entity.Property(e => e.Truong).HasMaxLength(50);
             });
@@ -440,11 +500,17 @@ namespace CodeSampleAPI.Data
                 entity.Property(e => e.TenPhong)
                     .IsRequired()
                     .HasMaxLength(100);
+
+                entity.HasOne(d => d.IdChuPhongNavigation)
+                    .WithMany(p => p.PhongHocs)
+                    .HasForeignKey(d => d.IdChuPhong)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_PhongHoc_GiangVien");
             });
 
-            modelBuilder.Entity<TestCase>(entity =>
+            modelBuilder.Entity<TestCaseBtcode>(entity =>
             {
-                entity.ToTable("TestCase");
+                entity.ToTable("TestCase_BTCode");
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
@@ -461,9 +527,33 @@ namespace CodeSampleAPI.Data
                     .HasColumnName("output");
 
                 entity.HasOne(d => d.IdBaiTapNavigation)
-                    .WithMany(p => p.TestCases)
+                    .WithMany(p => p.TestCaseBtcodes)
                     .HasForeignKey(d => d.IdBaiTap)
-                    .HasConstraintName("FK_TestCase_BaiTapCode");
+                    .HasConstraintName("FK_TestCase_BTCode_BaiTapCode");
+            });
+
+            modelBuilder.Entity<TestCaseLuyenTap>(entity =>
+            {
+                entity.ToTable("TestCase_LuyenTap");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.IdBtluyenTap).HasColumnName("ID_BTLuyenTap");
+
+                entity.Property(e => e.Input)
+                    .IsRequired()
+                    .HasMaxLength(1000)
+                    .HasColumnName("input");
+
+                entity.Property(e => e.Output)
+                    .IsRequired()
+                    .HasMaxLength(1000)
+                    .HasColumnName("output");
+
+                entity.HasOne(d => d.IdBtluyenTapNavigation)
+                    .WithMany(p => p.TestCaseLuyenTaps)
+                    .HasForeignKey(d => d.IdBtluyenTap)
+                    .HasConstraintName("FK_TestCase_LuyenTap_BT_LuyenTap");
             });
 
             OnModelCreatingPartial(modelBuilder);

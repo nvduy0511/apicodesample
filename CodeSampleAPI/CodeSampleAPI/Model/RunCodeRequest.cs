@@ -10,7 +10,6 @@ namespace CodeSampleAPI.Model
         private String code;
         private String language;
         private String input;
-
         public string Code { get => code; set => code = value; }
         public string Language { get => language; set => language = value; }
         public string Input { get => input; set => input = value; }

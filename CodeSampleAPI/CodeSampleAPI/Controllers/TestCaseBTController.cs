@@ -10,23 +10,23 @@ namespace CodeSampleAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TestCaseController : ControllerBase
+    public class TestCaseBTController : ControllerBase
     {
-        private readonly ITestCaseService _testCaseService;
-        public TestCaseController(ITestCaseService testCaseService)
+        private readonly ITestCaseBTService _testCaseBTService;
+        public TestCaseBTController(ITestCaseBTService testCaseBTService)
         {
-            this._testCaseService = testCaseService;
+            this._testCaseBTService = testCaseBTService;
         }
         [HttpGet]
         public IActionResult getListIntTestCase(int id)
         {
-            return Ok(_testCaseService.getListIntTestCaseByIDBaiTapCode(id));
+            return Ok(_testCaseBTService.getListIntTestCaseByIDBaiTapCode(id));
         }
 
         [HttpGet("getOneTestCase")]
         public IActionResult getOneTestCaseByID(int id)
         {
-            return Ok(_testCaseService.getTestCasesByIDBaiTapCode(id));
+            return Ok(_testCaseBTService.getTestCasesByIDBaiTapCode(id));
         }    
     }
 }

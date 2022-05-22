@@ -16,6 +16,8 @@ namespace CodeSampleAPI.Data
         }
 
         public string UId { get; set; }
+        public string TenHienThi { get; set; }
+        public string LinkAvatar { get; set; }
         public string HoTen { get; set; }
         public string Email { get; set; }
         public DateTime NamSinh { get; set; }

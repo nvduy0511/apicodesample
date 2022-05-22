@@ -18,12 +18,14 @@ namespace CodeSampleAPI.Controllers
     [ApiController]
     public class RunCodeController : ControllerBase
     {
-        private readonly ITestCaseService _testCaseService;
+        private readonly ITestCaseBTService _testCaseBTService;
+        private readonly ITestCaseLuyenTapService _testCaseLuyenTapService;
         private readonly IRunCodeService _runCodeService;
-        public RunCodeController(ITestCaseService testCaseService,IRunCodeService runCodeService)
+        public RunCodeController(ITestCaseBTService testCaseBTService,IRunCodeService runCodeService, ITestCaseLuyenTapService testCaseLuyenTapService)
         {
-            this._testCaseService = testCaseService;
+            this._testCaseBTService = testCaseBTService;
             this._runCodeService = runCodeService;
+            this._testCaseLuyenTapService = testCaseLuyenTapService;
         }
         [Route("api/runCode")]
         [HttpPost]
@@ -34,11 +36,11 @@ namespace CodeSampleAPI.Controllers
             return Ok(task.Result);
         }
 
-        [Route("api/runCodes")]
+        [Route("api/runCodesBaiTap")]
         [HttpPost]
-        public IActionResult runCodes(int id,[FromBody] RunCodeRequest requestFromClient)
+        public IActionResult runCodesBaiTap(int id,[FromBody] RunCodeRequest requestFromClient)
         {
-            List<TestCase> testCases = _testCaseService.getTestCasesByIDBaiTapCode(id);
+            List<TestCaseBtcode> testCases = _testCaseBTService.getTestCasesByIDBaiTapCode(id);
 
             // List input cho các test case
             List<String> inputs = (from tC in testCases select tC.Input).ToList();
@@ -69,6 +71,45 @@ namespace CodeSampleAPI.Controllers
             {
                 kq.Add(outputs.ElementAt(i)
                     .Equals(res.ElementAt(i).output) 
+                    ? 1 : 0);
+            }
+            return Ok(kq);
+        }
+        [Route("api/runCodesLuyenTap")]
+        [HttpPost]
+        public IActionResult runCodesLuyenTap(int id, [FromBody] RunCodeRequest requestFromClient)
+        {
+            List<TestCaseLuyenTap> testCases = _testCaseLuyenTapService.getTestCasesByID(id);
+
+            // List input cho các test case
+            List<String> inputs = (from tC in testCases select tC.Input).ToList();
+            List<String> outputs = (from tC in testCases select tC.Output).ToList();
+            // List các task chạy bất đồng bộ
+            List<Task<RunCodeResponse>> TaskList = new List<Task<RunCodeResponse>>();
+            // List các request để Call API Code X
+            List<RunCodeRequest> runCodeRequests = new List<RunCodeRequest>();
+            // Tạo request cho API code X bằng input từ DB 
+            foreach (String input in inputs)
+            {
+                runCodeRequests.Add(new RunCodeRequest() { Code = requestFromClient.Code, Language = requestFromClient.Language, Input = input });
+            }
+            // Chạy đa luồng call API Code X
+            foreach (RunCodeRequest runCodeRequest in runCodeRequests)
+            {
+                Task<RunCodeResponse> task = Task<RunCodeResponse>.Run(() => _runCodeService.callAPI(runCodeRequest));
+                TaskList.Add(task);
+            }
+            Task.WaitAll(TaskList.ToArray());
+
+            // List kết quả sau khi chạy xong
+            List<RunCodeResponse> res = TaskList.Select(p => p.Result).ToList();
+
+            //So sánh kết qủa giữa Output trong DB và Output code của người dùng
+            List<int> kq = new List<int>();
+            for (int i = 0; i < outputs.Count; i++)
+            {
+                kq.Add(outputs.ElementAt(i)
+                    .Equals(res.ElementAt(i).output)
                     ? 1 : 0);
             }
             return Ok(kq);

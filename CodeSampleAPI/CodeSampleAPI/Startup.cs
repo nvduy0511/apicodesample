@@ -36,12 +36,15 @@ namespace CodeSampleAPI
             });
             services.AddDbContext<CodeSampleContext>();
             services.AddTransient<IRunCodeService, RunCodeService>();
-            services.AddTransient<ITestCaseService, TestCaseService>();
+            services.AddTransient<ITestCaseBTService, TestCaseBTService>();
+            services.AddTransient<ITestCaseLuyenTapService, TestCaseLuyenTapService>();
             services.AddTransient<IMonHocService, MonHocService>();
             services.AddTransient<IBaiTapCodeService, BaiTapCodeService>();
+            services.AddTransient<IBTLuyenTapService, BTLuyenTapService>();
             services.AddTransient<ILyThuyetService, LyThuyetService>();
             services.AddTransient<IBaiTapTracNghiemService, BaiTapTracNghiemService>();
             services.AddTransient<IPhongHocService, PhongHocService>();
+            services.AddTransient<IDeKiemTraService, DeKiemTraService>();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
