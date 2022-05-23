@@ -12,6 +12,8 @@ namespace CodeSampleAPI.Service
         List<DeKiemTra> getDeKiemTraByIdPhong(int id);
         
         bool addDeKiemTra(DeKiemTra_Custom deKiemTra);
+
+        DeKiemTra_Custom getDeKiemTraByID(int id);
     }
     public class DeKiemTraService : IDeKiemTraService
     {
@@ -45,18 +47,6 @@ namespace CodeSampleAPI.Service
                     if(item.loaiCauHoi == 0)
                     {
                         // thêm ct đề kiểm tra trắc nghiệm
-                        CtDeKiemTraCode ctCode = new CtDeKiemTraCode() 
-                        {
-                            IdDeKiemTra =  deKiemTra.Id,
-                            IdBaiTapCode=item.id, 
-                            SttCauHoi = item.stt,
-                            Diem = item.diem
-                        };
-                        _codeSampleContext.CtDeKiemTraCodes.Add(ctCode);
-                    }    
-                    else
-                    {
-                        // thêm ct đề kiểm tra code
                         CtDeKiemTraTracNghiem ctTN = new CtDeKiemTraTracNghiem()
                         {
                             IdDeKiemTra = deKiemTra.Id,
@@ -65,16 +55,71 @@ namespace CodeSampleAPI.Service
                             Diem = item.diem
                         };
                         _codeSampleContext.CtDeKiemTraTracNghiems.Add(ctTN);
+                    }    
+                    else
+                    {
+                        // thêm ct đề kiểm tra code
+                        CtDeKiemTraCode ctCode = new CtDeKiemTraCode()
+                        {
+                            IdDeKiemTra = deKiemTra.Id,
+                            IdBaiTapCode = item.id,
+                            SttCauHoi = item.stt,
+                            Diem = item.diem
+                        };
+                        _codeSampleContext.CtDeKiemTraCodes.Add(ctCode);
+                        
                     }
-                    _codeSampleContext.SaveChanges();
-                }    
+                    
+                }
+                _codeSampleContext.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                string s = e.ToString();
                 return false;
             }
 
             return true;
+        }
+
+        public DeKiemTra_Custom getDeKiemTraByID(int id)
+        {
+            // lấy danh sách câu hỏi đề kiểm tra code
+            var lsCode = (from ktCode in _codeSampleContext.CtDeKiemTraCodes
+                          where ktCode.IdDeKiemTra == id
+                          select new CauHoi()
+                          {
+                              id = ktCode.IdBaiTapCode,
+                              diem = ktCode.Diem,
+                              loaiCauHoi = 1,
+                              stt = ktCode.SttCauHoi
+                          }).ToList();
+
+            // lấy danh sách câu hỏi đề kiểm tra trăc nghiệm
+            var lsTN = (from ktTN in _codeSampleContext.CtDeKiemTraTracNghiems
+                          where ktTN.IdDeKiemTra == id
+                          select new CauHoi()
+                          {
+                              id = ktTN.IdBaiTapTracNghiem,
+                              diem = ktTN.Diem,
+                              loaiCauHoi = 0,
+                              stt = ktTN.SttCauHoi
+                          }).ToList();
+
+            // gộp 2 danh sách lại và sắp xếp theo thứ tự câu
+            var lsUnion = lsCode.Union(lsTN).OrderBy(p => p.stt).ToList();
+
+            var res = (from deKT in _codeSampleContext.DeKiemTras
+                      where deKT.Id == id
+                      select new DeKiemTra_Custom()
+                      {
+                          moTa = deKT.MoTa,
+                          ngayBatDau = deKT.NgayBatDau,
+                          ngayKetThuc = deKT.NgayKetThuc,
+                          trangThai = deKT.TrangThai,
+                          listCauHoi = lsUnion
+                      }).FirstOrDefault();
+            return res;
         }
     }
 }

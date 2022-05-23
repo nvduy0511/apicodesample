@@ -22,7 +22,7 @@ namespace CodeSampleAPI.Service
 
         public List<int> getListIntTestCaseByID(int id)
         {
-            int count = _codeSampleContext.TestCaseLuyenTaps.Where(p => p.Id == id).ToList().Count;
+            int count = _codeSampleContext.TestCaseLuyenTaps.Where(p => p.IdBtluyenTap == id).ToList().Count;
             List<int> testCaseInt = new List<int>();
             // 0: là đánh dấu testCase lên cho UI xử lý icon còn dữ liệu testCase sẽ chỉ xử lý ở phần BE
             for (int i = 0; i < count; i++)

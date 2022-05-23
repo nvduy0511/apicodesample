@@ -8,8 +8,8 @@ namespace CodeSampleAPI.Model
     public class CauHoi
     {
         public int id { get; set; }
-        public int stt { get; set; }
+        public int? stt { get; set; }
         public int loaiCauHoi { get; set; }
-        public float diem { get; set; }
+        public double? diem { get; set; }
     }
 }

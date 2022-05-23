@@ -19,6 +19,12 @@ namespace CodeSampleAPI.Controllers
             this._deKiemTraService = deKiemTraService;
         }
 
+        [HttpGet("getById")]
+        public IActionResult getById(int id)
+        {
+            return Ok(_deKiemTraService.getDeKiemTraByID(id));
+        }
+
         [HttpPost]
         public IActionResult addDeKiemTra([FromBody] DeKiemTra_Custom deKiemTra_Custom)
         {

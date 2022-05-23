@@ -21,20 +21,17 @@ namespace CodeSampleAPI.Service
         {
             using (var client = new HttpClient())
             {
-                var contentType = new MediaTypeWithQualityHeaderValue("application/json");
-                var url = "https://codexweb.netlify.app/.netlify/functions/enforceCode";
-                client.DefaultRequestHeaders.Accept.Add(contentType);
+                var url = "http://192.168.1.246:3002/compilecode";
 
-                var data = new Dictionary<string, string>
+
+                var data = new[]
                 {
-                    {"code",runCodeRequest.Code},
-                    {"input",runCodeRequest.Input},
-                    {"language",runCodeRequest.Language}
+                      new KeyValuePair<String, String>("code", runCodeRequest.Code),
+                      new KeyValuePair<String, String>("input" , runCodeRequest.Input),
+                      new KeyValuePair<String, String>("language" , runCodeRequest.Language)
                 };
 
-                var jsonData = JsonConvert.SerializeObject(data);
-                var contentData = new StringContent(jsonData.ToString(), Encoding.UTF8, "application/json");
-                var response = await client.PostAsync(url, contentData);
+                var response = await client.PostAsync(url, new FormUrlEncodedContent(data));
 
                 if (response.IsSuccessStatusCode)
                 {
