@@ -73,9 +73,8 @@ namespace CodeSampleAPI.Service
                 }
                 _codeSampleContext.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                string s = e.ToString();
                 return false;
             }
 

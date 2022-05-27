@@ -54,7 +54,7 @@ namespace CodeSampleAPI.Controllers
             {
                 runCodeRequests.Add(new RunCodeRequest() { Code = requestFromClient.Code, Language = requestFromClient.Language, Input = input });
             }
-            // Chạy đa luồng call API Code X
+            // Chạy đa luồng call API Code 
             foreach (RunCodeRequest runCodeRequest in runCodeRequests)
             {
                 Task<RunCodeResponse> task = Task<RunCodeResponse>.Run(() => _runCodeService.callAPI(runCodeRequest));

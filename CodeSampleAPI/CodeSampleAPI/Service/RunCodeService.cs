@@ -21,7 +21,7 @@ namespace CodeSampleAPI.Service
         {
             using (var client = new HttpClient())
             {
-                var url = "http://192.168.1.246:3002/compilecode";
+                var url = "http://localhost:3002/compilecode";
 
 
                 var data = new[]
