@@ -25,6 +25,12 @@ namespace CodeSampleAPI.Controllers
             return Ok(_deKiemTraService.getDeKiemTraByID(id));
         }
 
+        [HttpGet("getByIdPhong")]
+        public IActionResult getByIdPhong(string id)
+        {
+            return Ok(_deKiemTraService.getDeKiemTraByIdPhong(id));
+        }
+
         [HttpPost]
         public IActionResult addDeKiemTra([FromBody] DeKiemTra_Custom deKiemTra_Custom)
         {

@@ -9,7 +9,7 @@ namespace CodeSampleAPI.Service
 {
     public interface IDeKiemTraService
     {
-        List<DeKiemTra> getDeKiemTraByIdPhong(int id);
+        List<DeKiemTra> getDeKiemTraByIdPhong(string id);
         
         bool addDeKiemTra(DeKiemTra_Custom deKiemTra);
 
@@ -24,9 +24,9 @@ namespace CodeSampleAPI.Service
         }
 
 
-        public List<DeKiemTra> getDeKiemTraByIdPhong(int id)
+        public List<DeKiemTra> getDeKiemTraByIdPhong(string id)
         {
-            return _codeSampleContext.DeKiemTras.Where(p => p.IdPhong == id).ToList();
+            return _codeSampleContext.DeKiemTras.Where(p => p.IdPhong.Equals(id)).ToList();
         }
         public bool addDeKiemTra(DeKiemTra_Custom deKiemTra_cus)
         {

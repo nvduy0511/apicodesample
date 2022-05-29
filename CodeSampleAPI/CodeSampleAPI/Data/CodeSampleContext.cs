@@ -331,7 +331,9 @@ namespace CodeSampleAPI.Data
                     .HasMaxLength(50)
                     .HasColumnName("uID_NguoiDung");
 
-                entity.Property(e => e.IdPhongHoc).HasColumnName("ID_PhongHoc");
+                entity.Property(e => e.IdPhongHoc)
+                    .HasMaxLength(10)
+                    .HasColumnName("ID_PhongHoc");
 
                 entity.Property(e => e.NgayThamGia).HasColumnType("date");
 
@@ -379,7 +381,10 @@ namespace CodeSampleAPI.Data
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.IdPhong).HasColumnName("ID_Phong");
+                entity.Property(e => e.IdPhong)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("ID_Phong");
 
                 entity.Property(e => e.MoTa).HasMaxLength(50);
 
@@ -490,7 +495,9 @@ namespace CodeSampleAPI.Data
             {
                 entity.ToTable("PhongHoc");
 
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id)
+                    .HasMaxLength(10)
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.IdChuPhong)
                     .IsRequired()

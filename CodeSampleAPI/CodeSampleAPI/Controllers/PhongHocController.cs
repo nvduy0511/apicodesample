@@ -25,8 +25,14 @@ namespace CodeSampleAPI.Controllers
             return Ok(_phongHocService.getListPhongHocByUidUser(uID));
         }
 
+        [HttpGet("getOne")]
+        public IActionResult getOneById(string id)
+        {
+            return Ok(_phongHocService.getOneByID(id));
+        }
+
         [HttpPost("addUser")]
-        public IActionResult addUserToPhongHoc(string uID, int id)
+        public IActionResult addUserToPhongHoc(string uID, string id)
         {
             return Ok(_phongHocService.addUserToPhongPhong(uID, id));
         }

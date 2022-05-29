@@ -10,7 +10,9 @@ namespace CodeSampleAPI.Service
     {
         List<PhongHoc> getListPhongHocByUidUser(string uID);
 
-        bool addUserToPhongPhong(string uID, int idPhongHoc);
+        bool addUserToPhongPhong(string uID, string idPhongHoc);
+
+        PhongHoc getOneByID(string id);
 
     }
     public class PhongHocService : IPhongHocService
@@ -26,7 +28,7 @@ namespace CodeSampleAPI.Service
             return _codeSampleContext.CtPhongHocs.Where(p => p.UIdNguoiDung == uID).Select(p => p.IdPhongHocNavigation).ToList();
         }
 
-        public bool addUserToPhongPhong(string uID, int idPhongHoc)
+        public bool addUserToPhongPhong(string uID, string idPhongHoc)
         {
             // kiểm tra phòng học có tồn tại không
             PhongHoc phongHoc = _codeSampleContext.PhongHocs.FirstOrDefault(p => p.Id == idPhongHoc);
@@ -50,6 +52,11 @@ namespace CodeSampleAPI.Service
                 return false;
             }
             return true;
+        }
+
+        public PhongHoc getOneByID(string id)
+        {
+            return _codeSampleContext.PhongHocs.FirstOrDefault(p => p.Id.Equals(id));
         }
     }
 }

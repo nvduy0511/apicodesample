@@ -10,7 +10,7 @@ namespace CodeSampleAPI.Model
         public DateTime ngayBatDau { get; set; }
         public DateTime ngayKetThuc { get; set; }
         public string moTa { get; set; }
-        public int idPhong { get; set; }
+        public string idPhong { get; set; }
         public int? trangThai { get; set; }
         public List<CauHoi> listCauHoi { get; set; }
     }
