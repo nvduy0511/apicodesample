@@ -36,5 +36,10 @@ namespace CodeSampleAPI.Controllers
         {
             return Ok(_btLuyenTapService.add(bt));
         }
+        [HttpGet]
+        public IActionResult getListBtLuyenTapByuID(string uID)
+        {
+            return Ok(_btLuyenTapService.getBTLuyenTapByuID(uID));
+        }
     }
 }

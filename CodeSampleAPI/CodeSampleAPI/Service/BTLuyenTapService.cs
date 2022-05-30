@@ -10,7 +10,7 @@ namespace CodeSampleAPI.Service
     public interface IBTLuyenTapService
     {
         List<BTLuyenTap_getAll> getAll();
-
+        List<BtLuyenTap> getBTLuyenTapByuID(string uID);
         BtLuyenTap getOne(int id);
 
         bool add(BaiTapLuyenTap_Custom btLuyenTap_Cus);
@@ -80,6 +80,11 @@ namespace CodeSampleAPI.Service
         public BtLuyenTap getOne(int id)
         {
             return _codeSampleContext.BtLuyenTaps.FirstOrDefault(p => p.Id == id);
+        }
+
+        public List<BtLuyenTap> getBTLuyenTapByuID(string uID)
+        {
+            return _codeSampleContext.BtLuyenTaps.Where(bt => bt.UIdNguoiTao == uID).ToList();
         }
     }
 }

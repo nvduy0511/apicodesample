@@ -43,7 +43,7 @@ namespace CodeSampleAPI.Data
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=DESKTOP-CT0V15K\\SQLEXPRESS;Database=CodeSample;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-PDHA0NQ\\SQLEXPRESS;Database=CodeSample;Trusted_Connection=True;");
             }
         }
 
@@ -111,8 +111,7 @@ namespace CodeSampleAPI.Data
 
                 entity.Property(e => e.TieuDe)
                     .IsRequired()
-                    .HasMaxLength(100)
-                    .HasComment("SQL_Latin1_General_CP1_CI_AI");
+                    .HasMaxLength(100);
 
                 entity.Property(e => e.UIdNguoiTao)
                     .HasMaxLength(50)
@@ -132,8 +131,7 @@ namespace CodeSampleAPI.Data
 
                 entity.Property(e => e.CauHoi)
                     .IsRequired()
-                    .HasMaxLength(1000)
-                    .HasComment("SQL_Latin1_General_CP1_CI_AI");
+                    .HasMaxLength(1000);
 
                 entity.Property(e => e.CauTraLoi1).HasMaxLength(500);
 
@@ -175,8 +173,7 @@ namespace CodeSampleAPI.Data
 
                 entity.Property(e => e.TieuDe)
                     .IsRequired()
-                    .HasMaxLength(100)
-                    .HasComment("SQL_Latin1_General_CP1_CI_AI");
+                    .HasMaxLength(100);
 
                 entity.Property(e => e.UIdNguoiTao)
                     .HasMaxLength(50)
@@ -331,7 +328,9 @@ namespace CodeSampleAPI.Data
                     .HasMaxLength(50)
                     .HasColumnName("uID_NguoiDung");
 
-                entity.Property(e => e.IdPhongHoc).HasColumnName("ID_PhongHoc");
+                entity.Property(e => e.IdPhongHoc)
+                    .HasMaxLength(10)
+                    .HasColumnName("ID_PhongHoc");
 
                 entity.Property(e => e.NgayThamGia).HasColumnType("date");
 
@@ -379,7 +378,10 @@ namespace CodeSampleAPI.Data
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.Property(e => e.IdPhong).HasColumnName("ID_Phong");
+                entity.Property(e => e.IdPhong)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("ID_Phong");
 
                 entity.Property(e => e.MoTa).HasMaxLength(50);
 
@@ -477,7 +479,7 @@ namespace CodeSampleAPI.Data
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.LinkAvatar).HasMaxLength(50);
+                entity.Property(e => e.LinkAvatar).HasMaxLength(200);
 
                 entity.Property(e => e.NamSinh).HasColumnType("date");
 
@@ -490,7 +492,9 @@ namespace CodeSampleAPI.Data
             {
                 entity.ToTable("PhongHoc");
 
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id)
+                    .HasMaxLength(10)
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.IdChuPhong)
                     .IsRequired()

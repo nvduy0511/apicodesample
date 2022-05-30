@@ -43,6 +43,12 @@ namespace CodeSampleAPI.Controllers
             return Ok(_baiTapTracNghiemService.searchBaiTapTN(searchValue));
         }
 
+        [HttpGet("getListByUId")]
+        public IActionResult getListByUId(string uID)
+        {
+            return Ok(_baiTapTracNghiemService.getListByUId(uID));
+        }
+
         [HttpDelete]
         public IActionResult deleteBaitapTracNghiem(int id)
         {

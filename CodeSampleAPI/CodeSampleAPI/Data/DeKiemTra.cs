@@ -18,7 +18,7 @@ namespace CodeSampleAPI.Data
         public string MoTa { get; set; }
         public DateTime NgayBatDau { get; set; }
         public DateTime NgayKetThuc { get; set; }
-        public int IdPhong { get; set; }
+        public string IdPhong { get; set; }
         public int? TrangThai { get; set; }
 
         public virtual PhongHoc IdPhongNavigation { get; set; }

@@ -13,7 +13,7 @@ namespace CodeSampleAPI.Data
             DeKiemTras = new HashSet<DeKiemTra>();
         }
 
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string TenPhong { get; set; }
         public string IdChuPhong { get; set; }
         public int? SoThanhVien { get; set; }

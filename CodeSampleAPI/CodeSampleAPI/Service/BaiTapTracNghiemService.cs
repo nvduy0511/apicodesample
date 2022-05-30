@@ -14,6 +14,7 @@ namespace CodeSampleAPI.Service
         bool addBaiTapTracNghiem(BaiTapTracNghiem_Custom btTN_Custom);
         List<BaiTapTracNghiem> getAll();
         BaiTapTracNghiem getOne(int id);
+        IList<BaiTapTracNghiem> getListByUId(string uID);
         List<CauHoi_SearchResult> searchBaiTapTN(string searchValue);
         bool deleteBaiTapTN(int id);
     }
@@ -42,7 +43,7 @@ namespace CodeSampleAPI.Service
                 _codeSampleContext.BaiTapTracNghiems.Add(btTN);
                 _codeSampleContext.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception )
             {
                 return false;
             }
@@ -117,6 +118,11 @@ namespace CodeSampleAPI.Service
         public BaiTapTracNghiem getOne(int id)
         {
             return _codeSampleContext.BaiTapTracNghiems.FirstOrDefault(p => p.Id == id);
+        }
+
+        public IList<BaiTapTracNghiem> getListByUId(string uID)
+        {
+            return _codeSampleContext.BaiTapTracNghiems.Where(tn => tn.UIdNguoiTao == uID).ToList();
         }
     }
 }

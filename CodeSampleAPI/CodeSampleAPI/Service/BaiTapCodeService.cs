@@ -15,8 +15,10 @@ namespace CodeSampleAPI.Service
     public interface IBaiTapCodeService
     {
         BaiTapCode GetById(int id);
+
         List<BaiTapCode> getAllBaiTapCode();
         bool addBaiTapCodeAndTestCases(BaiTapCode_Custom baiTapCode_Custom);
+        List<BaiTapCode> getListBaiTapCodeByUId(string uID);
         List<CauHoi_SearchResult> searchByIdOrMoTa(string searchValue);
         bool deleteBaiTapCode(int id);
     }
@@ -63,10 +65,10 @@ namespace CodeSampleAPI.Service
                     TestCaseBtcode t = new TestCaseBtcode() { IdBaiTap = baiTapCode.Id, Input = testCase.Input, Output = testCase.Output };
                     _codeSampleContext.TestCaseBtcodes.Add(t);
                 }
-                _codeSampleContext.SaveChanges();
             }
-            catch (System.Exception )
+            catch (System.Exception ex)
             {
+                Console.WriteLine("Error: ", ex);
                 return false;
             }
             return true;
@@ -131,6 +133,11 @@ namespace CodeSampleAPI.Service
             result = Regex.Replace(result, "ỳ|ý|ỵ|ỷ|ỹ|/g", "y");
             result = Regex.Replace(result, "đ", "d");
             return result;
+        }
+
+        public List<BaiTapCode> getListBaiTapCodeByUId(string uID)
+        {
+            return _codeSampleContext.BaiTapCodes.Where(bt => bt.UIdNguoiTao == uID).ToList();
         }
     }
 }

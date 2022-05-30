@@ -1,4 +1,5 @@
 ﻿using CodeSampleAPI.Data;
+using CodeSampleAPI.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,12 @@ namespace CodeSampleAPI.Service
 {
     public interface IPhongHocService
     {
+
+        bool createPhongHoc(PhongHoc phongHoc);
+        List<PhongHoc> GetPhongHocs();
         List<PhongHoc> getListPhongHocByUidUser(string uID);
 
-        bool addUserToPhongPhong(string uID, int idPhongHoc);
+        bool addUserToPhongPhong(string uID, string idPhongHoc);
 
     }
     public class PhongHocService : IPhongHocService
@@ -25,8 +29,8 @@ namespace CodeSampleAPI.Service
         {
             return _codeSampleContext.CtPhongHocs.Where(p => p.UIdNguoiDung == uID).Select(p => p.IdPhongHocNavigation).ToList();
         }
-
-        public bool addUserToPhongPhong(string uID, int idPhongHoc)
+        
+        public bool addUserToPhongPhong(string uID, string idPhongHoc)
         {
             // kiểm tra phòng học có tồn tại không
             PhongHoc phongHoc = _codeSampleContext.PhongHocs.FirstOrDefault(p => p.Id == idPhongHoc);
@@ -50,6 +54,28 @@ namespace CodeSampleAPI.Service
                 return false;
             }
             return true;
+        }
+
+        public bool createPhongHoc(PhongHoc phongHoc)
+        {
+            try
+            {
+                PhongHoc phong = new PhongHoc();
+                phong.TenPhong = phongHoc.TenPhong;
+                phong.IdChuPhong = phongHoc.IdChuPhong;
+                _codeSampleContext.PhongHocs.Add(phong);
+                _codeSampleContext.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public List<PhongHoc> GetPhongHocs()
+        {
+            return _codeSampleContext.PhongHocs.ToList();
         }
     }
 }

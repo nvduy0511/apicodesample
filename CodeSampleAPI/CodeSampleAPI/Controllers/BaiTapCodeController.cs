@@ -43,6 +43,14 @@ namespace CodeSampleAPI.Controllers
             return Ok(_baiTapCodeService.addBaiTapCodeAndTestCases(baiTapCode_Custom));
         }
 
+        [HttpGet("getListByUId")]
+        public IActionResult getListBaiTapByUId(string uID)
+        {
+            return Ok(_baiTapCodeService.getListBaiTapCodeByUId(uID));
+        }
+
+
+
         [HttpDelete]
         public IActionResult deleteBaiTapCode(int id)
         {
