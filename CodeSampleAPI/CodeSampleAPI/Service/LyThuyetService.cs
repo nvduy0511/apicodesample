@@ -1,4 +1,5 @@
 ﻿using CodeSampleAPI.Data;
+using CodeSampleAPI.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace CodeSampleAPI.Service
     public interface ILyThuyetService
     {
         LyThuyet getLyThuyetByID(int id);
-        List<LyThuyet> getAllLyThuyetByIDMonHoc(int id);
+        LyThuyet_TenMonHoc getAllLyThuyetByIDMonHoc(int id);
     }
     public class LyThuyetService : ILyThuyetService
     {
@@ -23,9 +24,16 @@ namespace CodeSampleAPI.Service
         {
             return _codeSampleContext.LyThuyets.FirstOrDefault(p => p.Id == id);
         }
-        public List<LyThuyet> getAllLyThuyetByIDMonHoc(int id)
+        public LyThuyet_TenMonHoc getAllLyThuyetByIDMonHoc(int id)
         {
-            return _codeSampleContext.LyThuyets.Where(p => p.IdMonHoc == id).ToList();
+            var res = (from mh in _codeSampleContext.MonHocs
+                       where mh.Id == id
+                       select new LyThuyet_TenMonHoc()
+                       {
+                           tenMonHoc = mh.TenMonHoc,
+                           lyThuyets = mh.LyThuyets.ToList()
+                       }).Single();
+            return res;
         }
     }
 }

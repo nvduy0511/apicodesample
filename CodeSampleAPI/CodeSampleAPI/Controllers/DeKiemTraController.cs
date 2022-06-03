@@ -36,5 +36,11 @@ namespace CodeSampleAPI.Controllers
         {
             return Ok(_deKiemTraService.addDeKiemTra(deKiemTra_Custom));
         }
+
+        [HttpPost("public-de-kiem-tra")]
+        public IActionResult publicDeKiemTra(int id)
+        {
+            return Ok(_deKiemTraService.publicDeKiemTra(id));
+        }
     }
 }

@@ -7,6 +7,7 @@ namespace CodeSampleAPI.Model
 {
     public class RunCodeResponse
     {
+        public string error { get; set; }
         public string output { get; set; }
     }
 }

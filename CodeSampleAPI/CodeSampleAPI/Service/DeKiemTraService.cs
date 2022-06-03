@@ -14,7 +14,9 @@ namespace CodeSampleAPI.Service
         bool addDeKiemTra(DeKiemTra_Custom deKiemTra);
 
         DeKiemTra_Custom getDeKiemTraByID(int id);
+        bool publicDeKiemTra(int id);
     }
+
     public class DeKiemTraService : IDeKiemTraService
     {
         private readonly CodeSampleContext _codeSampleContext;
@@ -119,6 +121,24 @@ namespace CodeSampleAPI.Service
                           listCauHoi = lsUnion
                       }).FirstOrDefault();
             return res;
+        }
+
+        public bool publicDeKiemTra(int id)
+        {
+            DeKiemTra deKiemTra = _codeSampleContext.DeKiemTras.FirstOrDefault(p => p.Id == id);
+            if(deKiemTra!=null)
+            {
+                deKiemTra.TrangThai = 1;
+                try
+                {
+                    _codeSampleContext.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

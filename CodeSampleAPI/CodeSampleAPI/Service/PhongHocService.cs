@@ -1,4 +1,5 @@
 ﻿using CodeSampleAPI.Data;
+using CodeSampleAPI.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,13 @@ namespace CodeSampleAPI.Service
 {
     public interface IPhongHocService
     {
-        List<PhongHoc> getListPhongHocByUidUser(string uID);
+        List<PhongHocCustom> getListPhongHocByUidUser(string uID);
 
         bool addUserToPhongPhong(string uID, string idPhongHoc);
 
         PhongHoc getOneByID(string id);
+
+        List<PhongHocCustom> getListPhongHocByUidGiangVien(string uID);
 
     }
     public class PhongHocService : IPhongHocService
@@ -23,9 +26,20 @@ namespace CodeSampleAPI.Service
             this._codeSampleContext = codeSampleContext;
         }
 
-        public List<PhongHoc> getListPhongHocByUidUser(string uID)
+        public List<PhongHocCustom> getListPhongHocByUidUser(string uID)
         {
-            return _codeSampleContext.CtPhongHocs.Where(p => p.UIdNguoiDung == uID).Select(p => p.IdPhongHocNavigation).ToList();
+            var res = (from ctph in _codeSampleContext.CtPhongHocs
+                       where ctph.UIdNguoiDung.Equals(uID)
+                       select new PhongHocCustom()
+                       {
+                          id = ctph.IdPhongHoc,
+                          tenPhong = ctph.IdPhongHocNavigation.TenPhong,
+                          soLuongThanhVien = ctph.IdPhongHocNavigation.SoThanhVien,
+                          linkAvatar = ctph.IdPhongHocNavigation.IdChuPhongNavigation.LinkAvatar,
+                          tenHienThi = ctph.IdPhongHocNavigation.IdChuPhongNavigation.TenHienThi
+                       }).ToList();
+
+            return res;
         }
 
         public bool addUserToPhongPhong(string uID, string idPhongHoc)
@@ -57,6 +71,22 @@ namespace CodeSampleAPI.Service
         public PhongHoc getOneByID(string id)
         {
             return _codeSampleContext.PhongHocs.FirstOrDefault(p => p.Id.Equals(id));
+        }
+
+        public List<PhongHocCustom> getListPhongHocByUidGiangVien(string uID)
+        {
+            var res = (from ph in _codeSampleContext.PhongHocs
+                       where ph.IdChuPhong.Equals(uID)
+                       select new PhongHocCustom()
+                       {
+                           id = ph.Id,
+                           linkAvatar = ph.IdChuPhongNavigation.LinkAvatar,
+                           tenHienThi = ph.IdChuPhongNavigation.TenHienThi,
+                           soLuongThanhVien = ph.SoThanhVien,
+                           tenPhong = ph.TenPhong
+                           
+                       }).ToList();
+            return res;
         }
     }
 }
