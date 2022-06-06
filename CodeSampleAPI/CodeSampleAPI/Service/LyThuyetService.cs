@@ -11,6 +11,10 @@ namespace CodeSampleAPI.Service
     {
         LyThuyet getLyThuyetByID(int id);
         LyThuyet_TenMonHoc getAllLyThuyetByIDMonHoc(int id);
+        int getSoLuongMon();
+        bool AddLT(LyThuyets_Custom lt);
+        bool EditLT(LyThuyets_Custom lt);
+        bool DeleteLT(int id);
     }
     public class LyThuyetService : ILyThuyetService
     {
@@ -34,6 +38,62 @@ namespace CodeSampleAPI.Service
                            lyThuyets = mh.LyThuyets.ToList()
                        }).Single();
             return res;
+        }
+
+        public int getSoLuongMon()
+        {
+            return _codeSampleContext.LyThuyets.ToList().Count();
+        }
+
+        public bool AddLT(LyThuyets_Custom lt)
+        {
+            if ((_codeSampleContext.MonHocs.FirstOrDefault(p => p.Id == lt.ID_MonHoc)) != null)
+            {
+                LyThuyet lyThuyet = new LyThuyet();
+                lyThuyet.TieuDe = lt.TieuDe;
+                lyThuyet.NoiDung = lt.NoiDung;
+                lyThuyet.IdMonHoc = lt.ID_MonHoc;
+                _codeSampleContext.LyThuyets.Add(lyThuyet);
+                _codeSampleContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool EditLT(LyThuyets_Custom lt)
+        {
+            LyThuyet lyThuyet = new LyThuyet();
+            lyThuyet = _codeSampleContext.LyThuyets.FirstOrDefault(p => p.Id == lt.ID);
+            if (lyThuyet != null)
+            {
+                lyThuyet.TieuDe = lt.TieuDe;
+                lyThuyet.NoiDung = lt.NoiDung;
+                _codeSampleContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteLT(int id)
+        {
+            LyThuyet lyThuyet = new LyThuyet();
+            lyThuyet = _codeSampleContext.LyThuyets.FirstOrDefault(p => p.Id == id);
+            if (lyThuyet != null)
+            {
+                _codeSampleContext.LyThuyets.Remove(lyThuyet);
+                _codeSampleContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

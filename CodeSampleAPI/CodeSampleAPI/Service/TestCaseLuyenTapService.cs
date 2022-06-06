@@ -11,6 +11,10 @@ namespace CodeSampleAPI.Service
         List<int> getListIntTestCaseByID(int id);
 
         List<TestCaseLuyenTap> getTestCasesByID(int id);
+
+        bool AddTestCase(string input, string output, int idBTLT);
+        bool DeleteTestCase(int id);
+        bool EditTestCase(int id, string input, string output);
     }
     public class TestCaseLuyenTapService : ITestCaseLuyenTapService
     {
@@ -18,6 +22,50 @@ namespace CodeSampleAPI.Service
         public TestCaseLuyenTapService(CodeSampleContext codeSampleContext)
         {
             this._codeSampleContext = codeSampleContext;
+        }
+
+        public bool AddTestCase(string input, string output, int idBTLT)
+        {
+            TestCaseLuyenTap ts = new TestCaseLuyenTap();
+            ts.Input = input;
+            ts.Output = output;
+            ts.IdBtluyenTap = idBTLT;
+            _codeSampleContext.TestCaseLuyenTaps.Add(ts);
+            _codeSampleContext.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteTestCase(int id)
+        {
+            TestCaseLuyenTap ts = new TestCaseLuyenTap();
+            ts = _codeSampleContext.TestCaseLuyenTaps.FirstOrDefault(p => p.Id == id);
+            if (ts != null)
+            {
+                _codeSampleContext.TestCaseLuyenTaps.Remove(ts);
+                _codeSampleContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool EditTestCase(int id, string input, string output)
+        {
+            TestCaseLuyenTap ts = new TestCaseLuyenTap();
+            ts = _codeSampleContext.TestCaseLuyenTaps.FirstOrDefault(p => p.Id == id);
+            if (ts != null)
+            {
+                ts.Input = input;
+                ts.Output = output;
+                _codeSampleContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public List<int> getListIntTestCaseByID(int id)

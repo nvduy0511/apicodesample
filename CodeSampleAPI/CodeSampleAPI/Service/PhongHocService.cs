@@ -11,6 +11,8 @@ namespace CodeSampleAPI.Service
     {
         List<PhongHocCustom> getListPhongHocByUidUser(string uID);
 
+        bool createPhongHoc(PhongHoc phongHoc);
+
         bool addUserToPhongPhong(string uID, string idPhongHoc);
 
         PhongHoc getOneByID(string id);
@@ -87,6 +89,24 @@ namespace CodeSampleAPI.Service
                            
                        }).ToList();
             return res;
+        }
+
+        public bool createPhongHoc(PhongHoc phongHoc)
+        {
+            try
+            {
+                PhongHoc phong = new PhongHoc();
+                phong.Id = phongHoc.Id;
+                phong.TenPhong = phongHoc.TenPhong;
+                phong.IdChuPhong = phongHoc.IdChuPhong;
+                _codeSampleContext.PhongHocs.Add(phong);
+                _codeSampleContext.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

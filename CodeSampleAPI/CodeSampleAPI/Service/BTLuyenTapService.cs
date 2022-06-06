@@ -11,9 +11,13 @@ namespace CodeSampleAPI.Service
     {
         List<BTLuyenTap_getAll> getAll();
 
-        BtLuyenTap getOne(int id);
+        List<BtLuyenTap> getAllByAdmin();
 
+        BtLuyenTap getOne(int id);
+        int getSoLuongBaiLuyenTap();
         bool add(BaiTapLuyenTap_Custom btLuyenTap_Cus);
+        bool DeleteBTLT(int id);
+        bool EditBTLT(int id, int doKho, string tieuDe, string deBai, string rangBuoc, string dinhDangDauVao, string dinhDangDauRa, string mauDauVao, string mauDauRa, string tag);
     }
     public class BTLuyenTapService:IBTLuyenTapService
     {
@@ -60,6 +64,49 @@ namespace CodeSampleAPI.Service
             return true;
         }
 
+        public bool DeleteBTLT(int id)
+        {
+            BtLuyenTap bt = new BtLuyenTap();
+            TestCaseLuyenTap ts = new TestCaseLuyenTap();
+            bt = _codeSampleContext.BtLuyenTaps.FirstOrDefault(p => p.Id == id);
+            ts = _codeSampleContext.TestCaseLuyenTaps.FirstOrDefault(p => p.IdBtluyenTap == id);
+            if (bt != null)
+            {
+                _codeSampleContext.BtLuyenTaps.Remove(bt);
+                _codeSampleContext.TestCaseLuyenTaps.Remove(ts);
+                _codeSampleContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool EditBTLT(int id, int doKho, string tieuDe, string deBai, string rangBuoc, string dinhDangDauVao, string dinhDangDauRa, string mauDauVao, string mauDauRa, string tag)
+        {
+            BtLuyenTap bt = new BtLuyenTap();
+            bt = _codeSampleContext.BtLuyenTaps.FirstOrDefault(p => p.Id == id);
+            if (bt != null)
+            {
+                bt.DoKho = doKho;
+                bt.TieuDe = tieuDe;
+                bt.DeBai = deBai;
+                bt.RangBuoc = rangBuoc;
+                bt.DinhDangDauVao = dinhDangDauVao;
+                bt.DinhDangDauRa = dinhDangDauRa;
+                bt.MauDauVao = mauDauVao;
+                bt.MauDauRa = mauDauRa;
+                bt.Tag = tag;
+                _codeSampleContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public List<BTLuyenTap_getAll> getAll()
         {
             var res = (from bt in _codeSampleContext.BtLuyenTaps
@@ -77,9 +124,19 @@ namespace CodeSampleAPI.Service
             return res;
         }
 
+        public List<BtLuyenTap> getAllByAdmin()
+        {
+            return _codeSampleContext.BtLuyenTaps.ToList();
+        }
+
         public BtLuyenTap getOne(int id)
         {
             return _codeSampleContext.BtLuyenTaps.FirstOrDefault(p => p.Id == id);
+        }
+
+        public int getSoLuongBaiLuyenTap()
+        {
+            return _codeSampleContext.BtLuyenTaps.ToList().Count();
         }
     }
 }

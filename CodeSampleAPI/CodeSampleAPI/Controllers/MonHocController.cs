@@ -1,4 +1,5 @@
-﻿using CodeSampleAPI.Service;
+﻿using CodeSampleAPI.Model;
+using CodeSampleAPI.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,6 +29,21 @@ namespace CodeSampleAPI.Controllers
         public IActionResult getAllMonHoc()
         {
             return Ok(_monHocService.getAllMonHoc());
+        }
+        [HttpPost("AddMonHoc")]
+        public IActionResult AddMonHoc([FromBody] MonHoc_Custom mh)
+        {
+            return Ok(_monHocService.AddMonHoc(mh));
+        }
+        [HttpPut("EditMonHoc")]
+        public IActionResult EditMonHoc([FromBody] MonHoc_Custom mh)
+        {
+            return Ok(_monHocService.EditMonHoc(mh));
+        }
+        [HttpDelete("DeleteMonHoc")]
+        public IActionResult DeleteMonHoc(int id)
+        {
+            return Ok(_monHocService.DeleteMonHoc(id));
         }
 
     }

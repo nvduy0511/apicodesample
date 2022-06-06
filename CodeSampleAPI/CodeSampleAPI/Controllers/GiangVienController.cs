@@ -38,5 +38,15 @@ namespace CodeSampleAPI.Controllers
         {
             return Ok(_giangVienService.AddOrUpdate(id, ten, mail, date, shool,linkAvatar,tenHienThi));
         }
+        [HttpPost("AddGV")]
+        public IActionResult AddGV(string id, string ten, string mail, DateTime date, string shool)
+        {
+            return Ok(_giangVienService.AddGV(id, ten, mail, date, shool));
+        }
+        [HttpPut("EditGV")]
+        public IActionResult EditGV(string id, string ten, DateTime date, string shool)
+        {
+            return Ok(_giangVienService.EditGV(id, ten, date, shool));
+        }
     }
 }
