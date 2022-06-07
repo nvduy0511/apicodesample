@@ -1,4 +1,5 @@
-﻿using CodeSampleAPI.Model;
+﻿using CodeSampleAPI.Data;
+using CodeSampleAPI.Model;
 using CodeSampleAPI.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,11 @@ namespace CodeSampleAPI.Controllers
         public IActionResult deleteBaiTapCode(int id)
         {
             return Ok(_baiTapCodeService.deleteBaiTapCode(id));
+        }
+        [HttpPost("addListBaiTapCode")]
+        public IActionResult addListBaiTap(List<BaiTapCode_Custom> listBai, string uID)
+        {
+            return Ok(_baiTapCodeService.addListBaiTapCode(listBai, uID));
         }
     }
 }

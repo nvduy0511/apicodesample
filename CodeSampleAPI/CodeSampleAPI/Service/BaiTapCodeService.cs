@@ -19,6 +19,8 @@ namespace CodeSampleAPI.Service
         bool addBaiTapCodeAndTestCases(BaiTapCode_Custom baiTapCode_Custom);
         List<CauHoi_SearchResult> searchByIdOrMoTa(string searchValue);
         bool deleteBaiTapCode(int id);
+        bool addListBaiTapCode(List<BaiTapCode_Custom> listBaiTapCode, string uID );
+
     }
 
     public class BaiTapCodeService : IBaiTapCodeService
@@ -131,6 +133,34 @@ namespace CodeSampleAPI.Service
             result = Regex.Replace(result, "ỳ|ý|ỵ|ỷ|ỹ|/g", "y");
             result = Regex.Replace(result, "đ", "d");
             return result;
+        }
+
+        public bool addListBaiTapCode(List<BaiTapCode_Custom> listBaiTapCode, string uID )
+        {
+            try
+            {
+                foreach (var item in listBaiTapCode)
+                {
+                    BaiTapCode baiTap = new BaiTapCode();
+                    baiTap.TieuDe = item.TieuDe;
+                    baiTap.DeBai = item.DeBai;
+                    baiTap.RangBuoc = item.RangBuoc;
+                    baiTap.DinhDangDauVao = item.DinhDangDauVao;
+                    baiTap.DinhDangDauRa = item.DinhDangDauRa;
+                    baiTap.MauDauVao = item.MauDauVao;
+                    baiTap.MauDauRa = item.MauDauRa;
+                    baiTap.NgonNgu = item.NgonNgu;
+                    baiTap.UIdNguoiTao = uID;
+
+                    _codeSampleContext.BaiTapCodes.Add(baiTap);
+                    _codeSampleContext.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
