@@ -54,5 +54,10 @@ namespace CodeSampleAPI.Controllers
         {
             return Ok(_baiTapCodeService.addListBaiTapCode(listBai, uID));
         }
+        [HttpGet("getListByuID")]
+        public IActionResult getByList(string uID)
+        {
+            return Ok(_baiTapCodeService.getListByuID(uID));
+        }
     }
 }

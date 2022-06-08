@@ -20,6 +20,7 @@ namespace CodeSampleAPI.Service
         List<CauHoi_SearchResult> searchByIdOrMoTa(string searchValue);
         bool deleteBaiTapCode(int id);
         bool addListBaiTapCode(List<BaiTapCode_Custom> listBaiTapCode, string uID );
+        List<BaiTapCode> getListByuID(string uID);
 
     }
 
@@ -161,6 +162,11 @@ namespace CodeSampleAPI.Service
                 return false;
             }
             return true;
+        }
+
+        public List<BaiTapCode> getListByuID(string uID)
+        {
+            return _codeSampleContext.BaiTapCodes.ToList();
         }
     }
 }

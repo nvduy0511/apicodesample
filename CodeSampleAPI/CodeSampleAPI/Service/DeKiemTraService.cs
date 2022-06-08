@@ -15,6 +15,8 @@ namespace CodeSampleAPI.Service
 
         DeKiemTra_Custom getDeKiemTraByID(int id);
         bool publicDeKiemTra(int id);
+
+        List<CauHoi_Custom> getListCauHoi(string uID);
     }
 
     public class DeKiemTraService : IDeKiemTraService
@@ -139,6 +141,35 @@ namespace CodeSampleAPI.Service
                 }
             }
             return true;
+        }
+
+        public List<CauHoi_Custom> getListCauHoi(string uID)
+        {
+            List<BaiTapCode> baiTapCodes = _codeSampleContext.BaiTapCodes.Where(b => b.UIdNguoiTao.Equals(uID)).ToList();
+
+            List<CauHoi_Custom> cauHois = new List<CauHoi_Custom>();
+
+            foreach (var item in baiTapCodes)
+            {
+                CauHoi_Custom baiTapCode = new CauHoi_Custom();
+                baiTapCode.Id = item.Id;
+                baiTapCode.TenBai = item.TieuDe;
+                baiTapCode.LoaiBai = 0;
+                cauHois.Add(baiTapCode);
+            }
+
+            List<BaiTapTracNghiem> baiTapTracNghiems = _codeSampleContext.BaiTapTracNghiems.Where(tn => tn.UIdNguoiTao.Equals(uID)).ToList();
+            foreach ( var item in baiTapTracNghiems )
+            {
+                CauHoi_Custom baiTapTN = new CauHoi_Custom();
+                baiTapTN.Id = item.Id;
+                baiTapTN.TenBai = item.CauHoi;
+                baiTapTN.LoaiBai = 1;
+                cauHois.Add(baiTapTN);
+            }
+            cauHois.GroupBy(q => q.Id);
+
+            return cauHois;
         }
     }
 }

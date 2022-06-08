@@ -42,5 +42,10 @@ namespace CodeSampleAPI.Controllers
         {
             return Ok(_deKiemTraService.publicDeKiemTra(id));
         }
+        [HttpGet("getListCauHoi")]
+        public IActionResult getListCauHoi(string uID)
+        {
+            return Ok(_deKiemTraService.getListCauHoi(uID));
+        }
     }
 }
