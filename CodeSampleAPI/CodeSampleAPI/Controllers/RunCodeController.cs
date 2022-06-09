@@ -33,10 +33,8 @@ namespace CodeSampleAPI.Controllers
         {
             Task<RunCodeResponse> task = Task<RunCodeResponse>.Run(() => _runCodeService.callAPI(runCodeRequest));
             task.Wait();
-            if(String.IsNullOrEmpty(task.Result.error))
-                return Ok(task.Result.output);
-            else
-                return Ok(task.Result.error);
+
+            return Ok(task.Result.output);
         }
 
         [Route("api/runCodesBaiTap")]
@@ -72,7 +70,7 @@ namespace CodeSampleAPI.Controllers
             List<int> kq = new List<int>();
             for (int i = 0; i < outputs.Count; i++)
             {
-                if(String.IsNullOrEmpty(res.ElementAt(i).error))
+                if(res.ElementAt(i).success)
                 {
                     kq.Add(outputs.ElementAt(i)
                     .Equals(res.ElementAt(i).output)
@@ -80,7 +78,8 @@ namespace CodeSampleAPI.Controllers
                 }
                 else
                 {
-                    kq.Add(0);
+                    kq.Add(-111);
+                    return Ok(kq);
                 }
                 
             }
@@ -119,7 +118,7 @@ namespace CodeSampleAPI.Controllers
             List<int> kq = new List<int>();
             for (int i = 0; i < outputs.Count; i++)
             {
-                if (String.IsNullOrEmpty(res.ElementAt(i).error))
+                if (res.ElementAt(i).success)
                 {
                     kq.Add(outputs.ElementAt(i)
                     .Equals(res.ElementAt(i).output)

@@ -21,7 +21,7 @@ namespace CodeSampleAPI.Service
         {
             using (var client = new HttpClient())
             {
-                var url = "http://localhost:3002/compilecode";
+                var url = "https://codex-api.herokuapp.com/";
 
 
                 var data = new[]
