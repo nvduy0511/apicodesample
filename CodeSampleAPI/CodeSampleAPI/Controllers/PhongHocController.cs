@@ -48,5 +48,10 @@ namespace CodeSampleAPI.Controllers
         {
             return Ok(_phongHocService.createPhongHoc(phong));
         }
+        [HttpGet("getMember")]
+        public IActionResult getMember(string IdPhong)
+        {
+            return Ok(_phongHocService.getListThanhVienByIdPhong(IdPhong));
+        }
     }
 }

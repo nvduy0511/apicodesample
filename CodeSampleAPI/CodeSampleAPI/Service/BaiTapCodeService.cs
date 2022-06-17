@@ -20,6 +20,8 @@ namespace CodeSampleAPI.Service
         List<CauHoi_SearchResult> searchByIdOrMoTa(string searchValue);
         bool deleteBaiTapCode(int id);
         bool addListBaiTapCode(List<BaiTapCode_Custom> listBaiTapCode, string uID );
+        bool editBaiTapCode(BaiTapCode_Custom baiTapCode_Custom);
+
         List<BaiTapCode> getListByuID(string uID);
 
     }
@@ -166,7 +168,30 @@ namespace CodeSampleAPI.Service
 
         public List<BaiTapCode> getListByuID(string uID)
         {
-            return _codeSampleContext.BaiTapCodes.ToList();
+            return _codeSampleContext.BaiTapCodes.Where(n => n.UIdNguoiTao.Equals(uID)).ToList();
+        }
+
+        public bool editBaiTapCode(BaiTapCode_Custom baiTapCode_Custom)
+        {
+            BaiTapCode btCode = new BaiTapCode();
+            btCode = _codeSampleContext.BaiTapCodes.FirstOrDefault(p => p.Id == baiTapCode_Custom.Id);
+            if (btCode != null)
+            {
+                btCode.TieuDe = baiTapCode_Custom.TieuDe;
+                btCode.DeBai = baiTapCode_Custom.DeBai;
+                btCode.RangBuoc = baiTapCode_Custom.RangBuoc;
+                btCode.DinhDangDauVao = baiTapCode_Custom.DinhDangDauVao;
+                btCode.DinhDangDauRa = baiTapCode_Custom.DinhDangDauRa;
+                btCode.MauDauVao = baiTapCode_Custom.MauDauVao;
+                btCode.MauDauRa = baiTapCode_Custom.MauDauRa;
+                btCode.NgonNgu = baiTapCode_Custom.NgonNgu;
+                _codeSampleContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

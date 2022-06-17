@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\TaiLieu\\HocKy2_Nam3\\DoAnCoSo\\API\\CodeSampleAPI\\CodeSampleAPI\\CodeSampleAPI.csproj": {}
+    "D:\\DoAnMonHoc\\DoAnCoSo\\github\\Done\\apicodesample\\CodeSampleAPI\\CodeSampleAPI\\CodeSampleAPI.csproj": {}
   },
   "projects": {
-    "E:\\TaiLieu\\HocKy2_Nam3\\DoAnCoSo\\API\\CodeSampleAPI\\CodeSampleAPI\\CodeSampleAPI.csproj": {
+    "D:\\DoAnMonHoc\\DoAnCoSo\\github\\Done\\apicodesample\\CodeSampleAPI\\CodeSampleAPI\\CodeSampleAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\TaiLieu\\HocKy2_Nam3\\DoAnCoSo\\API\\CodeSampleAPI\\CodeSampleAPI\\CodeSampleAPI.csproj",
+        "projectUniqueName": "D:\\DoAnMonHoc\\DoAnCoSo\\github\\Done\\apicodesample\\CodeSampleAPI\\CodeSampleAPI\\CodeSampleAPI.csproj",
         "projectName": "CodeSampleAPI",
-        "projectPath": "E:\\TaiLieu\\HocKy2_Nam3\\DoAnCoSo\\API\\CodeSampleAPI\\CodeSampleAPI\\CodeSampleAPI.csproj",
-        "packagesPath": "C:\\Users\\nvduy\\.nuget\\packages\\",
-        "outputPath": "E:\\TaiLieu\\HocKy2_Nam3\\DoAnCoSo\\API\\CodeSampleAPI\\CodeSampleAPI\\obj\\",
+        "projectPath": "D:\\DoAnMonHoc\\DoAnCoSo\\github\\Done\\apicodesample\\CodeSampleAPI\\CodeSampleAPI\\CodeSampleAPI.csproj",
+        "packagesPath": "C:\\Users\\pvtha\\.nuget\\packages\\",
+        "outputPath": "D:\\DoAnMonHoc\\DoAnCoSo\\github\\Done\\apicodesample\\CodeSampleAPI\\CodeSampleAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nvduy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pvtha\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -85,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
         }
       }
     }

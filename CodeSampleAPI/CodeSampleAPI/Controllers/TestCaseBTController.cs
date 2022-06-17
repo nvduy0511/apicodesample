@@ -27,6 +27,21 @@ namespace CodeSampleAPI.Controllers
         public IActionResult getOneTestCaseByID(int id)
         {
             return Ok(_testCaseBTService.getTestCasesByIDBaiTapCode(id));
-        }    
+        }
+        [HttpPost("AddTestCase")]
+        public IActionResult AddTestCase(string input, string output, int idBTLT)
+        {
+            return Ok(_testCaseBTService.AddTestCase(input, output, idBTLT));
+        }
+        [HttpDelete("DeleteTestCase")]
+        public IActionResult DeleteTestCase(int id)
+        {
+            return Ok(_testCaseBTService.DeleteTestCase(id));
+        }
+        [HttpPut("EditTestCase")]
+        public IActionResult EditTestCase(int id, string input, string output)
+        {
+            return Ok(_testCaseBTService.EditTestCase(id, input, output));
+        }
     }
 }

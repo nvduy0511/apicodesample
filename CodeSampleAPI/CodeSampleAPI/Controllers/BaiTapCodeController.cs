@@ -59,5 +59,10 @@ namespace CodeSampleAPI.Controllers
         {
             return Ok(_baiTapCodeService.getListByuID(uID));
         }
+        [HttpPut("editBaiTapCode")]
+        public IActionResult editBaiTapCode(BaiTapCode_Custom baiTapCode_Custom)
+        {
+            return Ok(_baiTapCodeService.editBaiTapCode(baiTapCode_Custom));
+        }
     }
 }

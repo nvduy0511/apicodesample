@@ -7,6 +7,7 @@ namespace CodeSampleAPI.Model
 {
     public class BaiTapCode_Custom
     {
+        public int Id { get; set; }
         public string TieuDe { get; set; }
         public string DeBai { get; set; }
         public string UIdNguoiTao { get; set; }

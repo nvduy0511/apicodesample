@@ -48,5 +48,16 @@ namespace CodeSampleAPI.Controllers
         {
             return Ok(_baiTapTracNghiemService.deleteBaiTapTN(id));
         }
+        [HttpPut("editBTTN")]
+        public IActionResult editBTTN(BaiTapTracNghiem_Custom btTN_Custom)
+        {
+            return Ok(_baiTapTracNghiemService.editBTTN(btTN_Custom));
+        }
+
+        [HttpGet("getListByUid")]
+        public IActionResult getListByUid(string uId)
+        {
+            return Ok(_baiTapTracNghiemService.getListByUid(uId));
+        }
     }
 }

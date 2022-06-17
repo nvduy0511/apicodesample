@@ -11,6 +11,9 @@ namespace CodeSampleAPI.Service
     {
         List<TestCaseBtcode> getTestCasesByIDBaiTapCode(int id);
         List<int> getListIntTestCaseByIDBaiTapCode(int id);
+        bool AddTestCase(string input, string output, int idBTLT);
+        bool DeleteTestCase(int id);
+        bool EditTestCase(int id, string input, string output);
     }
     public class TestCaseBTService : ITestCaseBTService
     {
@@ -33,6 +36,50 @@ namespace CodeSampleAPI.Service
                 testCaseInt.Add(2);
 
             return testCaseInt;
+        }
+
+        public bool AddTestCase(string input, string output, int idBTLT)
+        {
+            TestCaseBtcode ts = new TestCaseBtcode();
+            ts.Input = input;
+            ts.Output = output;
+            ts.IdBaiTap = idBTLT;
+            _codeSampleContext.TestCaseBtcodes.Add(ts);
+            _codeSampleContext.SaveChanges();
+            return true;
+        }
+
+        public bool DeleteTestCase(int id)
+        {
+            TestCaseBtcode ts = new TestCaseBtcode();
+            ts = _codeSampleContext.TestCaseBtcodes.FirstOrDefault(p => p.Id == id);
+            if (ts != null)
+            {
+                _codeSampleContext.TestCaseBtcodes.Remove(ts);
+                _codeSampleContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool EditTestCase(int id, string input, string output)
+        {
+            TestCaseBtcode ts = new TestCaseBtcode();
+            ts = _codeSampleContext.TestCaseBtcodes.FirstOrDefault(p => p.Id == id);
+            if (ts != null)
+            {
+                ts.Input = input;
+                ts.Output = output;
+                _codeSampleContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

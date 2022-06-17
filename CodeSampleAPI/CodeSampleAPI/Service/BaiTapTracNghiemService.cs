@@ -15,7 +15,10 @@ namespace CodeSampleAPI.Service
         List<BaiTapTracNghiem> getAll();
         BaiTapTracNghiem getOne(int id);
         List<CauHoi_SearchResult> searchBaiTapTN(string searchValue);
+        List<BaiTapTracNghiem> getListByUid(string uID);
         bool deleteBaiTapTN(int id);
+        bool editBTTN(BaiTapTracNghiem_Custom btTN_Custom);
+
     }
     public class BaiTapTracNghiemService : IBaiTapTracNghiemService
     {
@@ -117,6 +120,32 @@ namespace CodeSampleAPI.Service
         public BaiTapTracNghiem getOne(int id)
         {
             return _codeSampleContext.BaiTapTracNghiems.FirstOrDefault(p => p.Id == id);
+        }
+
+        public bool editBTTN(BaiTapTracNghiem_Custom btTN_Custom)
+        {
+            BaiTapTracNghiem bt = new BaiTapTracNghiem();
+            bt = _codeSampleContext.BaiTapTracNghiems.FirstOrDefault(p => p.Id == btTN_Custom.id);
+            if (bt != null)
+            {
+                bt.CauHoi = btTN_Custom.CauHoi;
+                bt.CauTraLoi1 = btTN_Custom.CauTraLoi1;
+                bt.CauTraLoi2 = btTN_Custom.CauTraLoi2;
+                bt.CauTraLoi3 = btTN_Custom.CauTraLoi3;
+                bt.CauTraLoi4 = btTN_Custom.CauTraLoi4;
+                bt.DapAn = btTN_Custom.DapAn;
+                _codeSampleContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public List<BaiTapTracNghiem> getListByUid(string uID)
+        {
+            return _codeSampleContext.BaiTapTracNghiems.Where(t => t.UIdNguoiTao.Equals(uID)).ToList();
         }
     }
 }

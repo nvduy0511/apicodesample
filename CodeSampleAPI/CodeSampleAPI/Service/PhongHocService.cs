@@ -19,6 +19,8 @@ namespace CodeSampleAPI.Service
 
         List<PhongHocCustom> getListPhongHocByUidGiangVien(string uID);
 
+        List<ThanhVien> getListThanhVienByIdPhong(string IdPhong);
+
     }
     public class PhongHocService : IPhongHocService
     {
@@ -107,6 +109,18 @@ namespace CodeSampleAPI.Service
             {
                 return false;
             }
+        }
+
+        public List<ThanhVien> getListThanhVienByIdPhong(string IdPhong)
+        {
+            var res = (from phong in _codeSampleContext.CtPhongHocs where phong.IdPhongHoc.Equals(IdPhong) select new ThanhVien()
+            {
+                TenHienThi = phong.UIdNguoiDungNavigation.TenHienThi,
+                HoTen = phong.UIdNguoiDungNavigation.HoTen,
+                Email = phong.UIdNguoiDungNavigation.Email
+            }).ToList();
+
+            return res;
         }
     }
 }

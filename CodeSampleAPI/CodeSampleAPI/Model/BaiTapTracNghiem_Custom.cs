@@ -7,6 +7,7 @@ namespace CodeSampleAPI.Model
 {
     public class BaiTapTracNghiem_Custom
     {
+        public int id { get; set; }
         public string CauHoi { get; set; }
         public string CauTraLoi1 { get; set; }
         public string CauTraLoi2 { get; set; }
