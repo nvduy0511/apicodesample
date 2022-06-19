@@ -30,7 +30,27 @@ namespace CodeSampleAPI.Service
 
         public List<DeKiemTra> getDeKiemTraByIdPhong(string id)
         {
-            return _codeSampleContext.DeKiemTras.Where(p => p.IdPhong.Equals(id)).ToList();
+            var lsDeKiemTra = _codeSampleContext.DeKiemTras.Where(p => p.IdPhong.Equals(id)).ToList();
+            foreach(var item in lsDeKiemTra)
+            {
+                if(item.TrangThai==1)
+                {
+                    if(item.NgayKetThuc <= DateTime.Now)
+                    {
+                        item.TrangThai = 2;
+                    }
+                }
+            }
+            try
+            {
+                _codeSampleContext.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return lsDeKiemTra;
+
         }
         public bool addDeKiemTra(DeKiemTra_Custom deKiemTra_cus)
         {
